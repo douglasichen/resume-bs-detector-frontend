@@ -26,13 +26,18 @@ function Results() {
           method: 'GET',
         })
 
-        console.log(`[RESPONSE] ${response}`);
+        const jsonResponse = await response.json()
+
+        console.log(`[RESPONSE] ${JSON.stringify({
+          ...jsonResponse,
+          resumePdf: null,
+        }, null, 2)}`);
 
         if (!response.ok) {
           throw new Error(`API error: ${response.status}`)
         }
 
-        const result = await response.json()
+        const result = jsonResponse;
         setData(result)
       } catch (err) {
         setError(err.message)
@@ -98,8 +103,8 @@ function Results() {
             <div key={index} className="result-item">
               <div className="result-header">
                 <span className="result-number">Claim #{index + 1}</span>
-                <span className={`result-status ${getStatusClass(item.answer)}`}>
-                  {getStatusLabel(item.answer)}
+                <span className={`result-status ${getStatusClass(item.verification)}`}>
+                  {getStatusLabel(item.verification)}
                 </span>
               </div>
 
@@ -167,30 +172,21 @@ function Results() {
   )
 }
 
-// Helper function to determine status class based on answer
-function getStatusClass(answer) {
-  const lowerAnswer = answer.toLowerCase()
-  if (lowerAnswer.startsWith('yes')) {
-    return 'verified'
-  } else if (lowerAnswer.includes('no evidence') || lowerAnswer.includes('no available') || lowerAnswer.includes('no record')) {
-    return 'unverified'
-  } else if (lowerAnswer.startsWith('no')) {
-    return 'false'
-  }
-  return 'uncertain'
+// Helper function to determine status class based on verification field
+function getStatusClass(verification) {
+  const normalized = verification.toLowerCase()
+  if (normalized === 'verified') return 'verified'
+  if (normalized === 'unsure') return 'unsure'
+  if (normalized === 'bullsh*t') return 'bullshit'
+  return 'unsure' // default fallback
 }
 
 // Helper function to get status label
-function getStatusLabel(answer) {
-  const lowerAnswer = answer.toLowerCase()
-  if (lowerAnswer.startsWith('yes')) {
-    return '✓ Verified'
-  } else if (lowerAnswer.includes('no evidence') || lowerAnswer.includes('no available') || lowerAnswer.includes('no record')) {
-    return '? Unverified'
-  } else if (lowerAnswer.startsWith('no')) {
-    return '✗ False'
-  }
-  return '~ Uncertain'
+function getStatusLabel(verification) {
+  if (verification === 'Verified') return '✓ Verified'
+  if (verification === 'Unsure') return '? Unsure'
+  if (verification === 'Bullsh*t') return '✗ Bullsh*t'
+  return '? Unsure' // default fallback
 }
 
 export default Results

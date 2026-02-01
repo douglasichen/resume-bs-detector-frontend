@@ -102,19 +102,14 @@
   color: #155724;
 }
 
-.result-status.unverified {
+.result-status.unsure {
   background-color: #fff3cd;
   color: #856404;
 }
 
-.result-status.false {
+.result-status.bullshit {
   background-color: #f8d7da;
   color: #721c24;
-}
-
-.result-status.uncertain {
-  background-color: #e2e3e5;
-  color: #383d41;
 }
 
 .result-question,
