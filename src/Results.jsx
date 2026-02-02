@@ -80,7 +80,7 @@ function Results() {
   return (
     <div className="results-page">
       <div className="results-header">
-        <h1>Resume Analysis Results</h1>
+        <h1>Resume Bullsh*t Report</h1>
         <p className="results-subtitle">Submission ID: {id}</p>
       </div>
 
