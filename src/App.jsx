@@ -85,6 +85,10 @@ function App() {
   return (
     <div className="container">
       <h1>Resume Bullsh*t Detector</h1>
+      <p className="info-note">
+        Our analysis takes a moment to process. We'll send your report to your email shortly. 
+        <strong> Please check your junk folder!</strong>
+      </p>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email *</label>

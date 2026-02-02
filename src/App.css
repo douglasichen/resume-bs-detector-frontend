@@ -6,9 +6,21 @@
 
 h1 {
   font-size: 1.8rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   color: #333;
   text-align: center;
+}
+
+.info-note {
+  text-align: center;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  background-color: #e7f3ff;
+  border-left: 4px solid #007bff;
+  border-radius: 4px;
+  color: #0056b3;
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 form {
