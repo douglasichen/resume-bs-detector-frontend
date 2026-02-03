@@ -5,6 +5,10 @@ function App() {
   const [email, setEmail] = useState('')
   const [files, setFiles] = useState([])
   const [isUploading, setIsUploading] = useState(false)
+  const [roleSelection, setRoleSelection] = useState('')
+  const [customRole, setCustomRole] = useState('')
+  const [name, setName] = useState('')
+  const [companyOrSchool, setCompanyOrSchool] = useState('')
 
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files)
@@ -54,15 +58,25 @@ function App() {
 
 
 
+      const payload = {
+        email,
+        resumes
+      };
+
+      // Add optional marketing analytics fields if provided
+      const role = roleSelection === 'Other' ? customRole : roleSelection;
+      if (role) payload.role = role;
+      if (name) payload.name = name;
+      if (companyOrSchool) payload.companyOrSchool = companyOrSchool;
+
+      console.log(`PAYLOAD: ${JSON.stringify(payload, null, 2)}`);
+
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          email,
-          resumes
-        })
+        body: JSON.stringify(payload)
       });
 
       console.log(`[RESPONSE] ${response}`);
@@ -71,9 +85,15 @@ function App() {
         throw new Error(`API error: ${response.status}`)
       }
 
+
+      // no need to reset the info, just the resume files.
       alert('We will email you our report soon!')
-      setEmail('')
+      // setEmail('')
       setFiles([])
+      // setRoleSelection('')
+      // setCustomRole('')
+      // setName('')
+      // setCompanyOrSchool('')
       e.target.reset()
     } catch (error) {
       alert('Upload failed: ' + error.message)
@@ -90,6 +110,8 @@ function App() {
         <strong> Please check your junk folder!</strong>
       </p>
       <form onSubmit={handleSubmit}>
+        <div className="section-header">Your Information</div>
+        
         <div className="form-group">
           <label htmlFor="email">Email *</label>
           <input
@@ -103,7 +125,61 @@ function App() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="files">PDF Files *</label>
+          <label htmlFor="role">Role (Optional)</label>
+          <select
+            id="role"
+            value={roleSelection}
+            onChange={(e) => {
+              setRoleSelection(e.target.value);
+              if (e.target.value !== 'Other') {
+                setCustomRole('');
+              }
+            }}
+          >
+            <option value="">Select a role...</option>
+            <option value="Recruiter">Recruiter</option>
+            <option value="Hiring Manager">Hiring Manager</option>
+            <option value="Applicant">Applicant</option>
+            <option value="Other">Other</option>
+          </select>
+          {roleSelection === 'Other' && (
+            <input
+              type="text"
+              value={customRole}
+              onChange={(e) => setCustomRole(e.target.value)}
+              placeholder="Please specify your role"
+              className="other-input"
+            />
+          )}
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="name">Name (Optional)</label>
+          <input
+            id="name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Your name"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="companyOrSchool">Company or School (Optional)</label>
+          <input
+            id="companyOrSchool"
+            type="text"
+            value={companyOrSchool}
+            onChange={(e) => setCompanyOrSchool(e.target.value)}
+            placeholder="Company or school name"
+          />
+        </div>
+
+        <div className="section-divider"></div>
+
+        <div className="form-group">
+          <label htmlFor="files">PDF Files to Analyze *</label>
+          {/* <p className="disclaimer">Note: Currently only 1 PDF can be processed at a time.</p> */}
           <input
             id="files"
             type="file"

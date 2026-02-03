@@ -29,6 +29,21 @@ form {
   gap: 1.5rem;
 }
 
+.section-header {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: -0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #007bff;
+}
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #ddd, transparent);
+  margin: 1rem 0;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
@@ -41,8 +56,20 @@ label {
   color: #555;
 }
 
+.disclaimer {
+  font-size: 0.85rem;
+  color: #856404;
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 4px;
+  padding: 0.5rem;
+  margin: 0.25rem 0;
+}
+
 input[type="email"],
-input[type="file"] {
+input[type="text"],
+input[type="file"],
+select {
   padding: 0.75rem;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -51,9 +78,20 @@ input[type="file"] {
 }
 
 input[type="email"]:focus,
-input[type="file"]:focus {
+input[type="text"]:focus,
+input[type="file"]:focus,
+select:focus {
   outline: none;
   border-color: #007bff;
+}
+
+select {
+  background-color: white;
+  cursor: pointer;
+}
+
+.other-input {
+  margin-top: 0.5rem;
 }
 
 .file-list {
