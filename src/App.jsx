@@ -87,7 +87,8 @@ function App() {
 
 
       // no need to reset the info, just the resume files.
-      alert('We will email you our report soon!')
+      // alert('We will email you our report soon!')
+      alert('Unfortunately, we have hit our proccessing limit for today... Please try again, or request for closed beta access here:\n https://docs.google.com/forms/d/e/1FAIpQLSfg_zNuAeGusQI-N5Ps7aDXtbsPsIa8weGddXVL7GXxOcrEnw/viewform')
       // setEmail('')
       setFiles([])
       // setRoleSelection('')
