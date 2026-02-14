@@ -205,6 +205,10 @@ function App() {
           {isUploading ? 'Uploading...' : 'Upload'}
         </button>
       </form>
+
+      <div className="contact-section">
+        <p>Contact us: <a href="mailto:douglas@ichen.ca">douglas@ichen.ca</a></p>
+      </div>
     </div>
   )
 }
